@@ -1,3 +1,5 @@
 var myPath = new Path();
 myPath.strokeColor = "black";
-myPath.add(new Point(0, 0), new Point(1000, 1000));
+var pravD = new Point(window.innerWidth - 10, window.innerHeight - 10);
+console.log(pravD);
+myPath.add(new Point(0, 0), pravD);
