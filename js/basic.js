@@ -1,5 +1,6 @@
+var canv;
 function ready() {
-  var canv = document.getElementById("myCanvas");
+  canv = document.getElementById("myCanvas");
   // Update the path from the JavaScript code.
   window.onload = function () {
     canv.style.width = this.screen.width;
