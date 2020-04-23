@@ -175,7 +175,7 @@ function onKeyDown(event) {
   if (event.key == "d" || event.key == "right") {
     movement.right = true;
   }
-  if (event.key == "space" && presets.cas) {
+  if (event.key == "space" && presets.cas && movement.up) {
     movement.space = true;
     presets.snimek = 0;
   }
