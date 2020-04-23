@@ -15,9 +15,10 @@ var presets = {
 }
 
 var Figurka = new function () {
+  //// Trysky za hrace pri stisknuti klavesy SPACE
   var pohonPath = new Path();
   for (var i = 1; i <= 4; i++) {
-    var circlecircle = new Path.Circle(stredPointOfRect - new Point(10, 0) * i, 9 - 2 * i)
+    var circlecircle = new Path.Circle(stredPointOfRect - new Point(10, 0) * i, 8 - 2 * i)
     circlecircle.center = stredPointOfRect - [10, 10] * i;
     pohonPath.join(circlecircle);
   }
@@ -25,8 +26,7 @@ var Figurka = new function () {
   pohonPath.visible = true;
   pohonPath.fillColor = "white";
   pohonPath.closed = true;
-  console.log();
-
+  //////////////////////////////
   var rect = new Rectangle(stredPointOfRect, new Size(20, 15));
   rect.center = stredPointOfRect;
   var rectPath = new Path.Rectangle(rect, new Size(1, 1));
@@ -37,19 +37,43 @@ var Figurka = new function () {
   var predchoziGroupPozice = group.position;
   var angle = 0;
   var vector = new Point();
+  var particlesPath = [];
+  var particlesGroup = new Group();
   return {
     group: group,
     angle: 0,
     update: function () {
-      if (presets.snimek > 40) {
+      //Snimek se nuluje jen pri stisku klavesy SPACE
+      if (presets.snimek > 30) {
         pohonPath.visible = false;
+      }
+      if (presets.snimek % 100 > 70 && !movement.up) {
+        particlesGroup.visible = false;
+      }
+      particlesGroup.position = group.position - vector * 6;
+    },
+    particles: function () {
+      particlesPath = [];
+      particlesGroup.removeChildren();
+      for (var i = 1; i <= 5; i++) {
+        var circlecircles = new Path.Circle(group.position, 3)
+        circlecircles.position = group.position - new Point(20, 20) * Point.random();
+        circlecircles.visible = true;
+        circlecircles.fillColor = new Color(0, 0., Math.random());;
+        circlecircles.closed = true;
+        particlesPath.push(circlecircles);
+      }
+      for (var i = 0; i < particlesPath.length; i++) {
+        particlesGroup.addChild(particlesPath[i]);
       }
     },
     rotace: function (hodnota) {
       group.rotate(hodnota, group.position);
       angle += hodnota;
+      particlesGroup.visible = true;
     },
     move: function (delkaVektoru) {
+      particlesGroup.visible = true;
       vector = new Point({
         position: group.position + (group.topRight - group.topLeft) / 2,
         angle: angle,
@@ -57,6 +81,7 @@ var Figurka = new function () {
       });
       predchoziGroupPozice = group.position;
       group.position += vector;
+      this.particles();
       this.kontrolaObrazovky();
     },
     dashdash: function (delkaVektoru) {
