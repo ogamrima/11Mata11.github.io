@@ -7,9 +7,9 @@ var angle = 0;
 var vector = new Point();
 
 var Figurka = new function () {
-  var rect = new Rectangle(stredPointOfRect, new Size(50, 50));
+  var rect = new Rectangle(stredPointOfRect, new Size(20, 15));
   rect.center = stredPointOfRect;
-  var rectPath = new Path.Rectangle(rect, new Size(10, 10));
+  var rectPath = new Path.Rectangle(rect, new Size(1, 1));
   rectPath.fillColor = "blue";
   rectPath.closed = true;
   rectPath.center = stredPointOfRect;
@@ -48,7 +48,7 @@ var Figurka = new function () {
 function Setup() {
   console.log("Velikost stranky: " + paper.view.size);
   // STRED STRANKY
-  var pathStredStranky = new Path.Circle(paper.view.center, new Size(10, 10));
+  var pathStredStranky = new Path.Circle(paper.view.center, new Size(1, 1));
   pathStredStranky.center = paper.view.center;
   pathStredStranky.fillColor = "red";
   pathStredStranky.closed
